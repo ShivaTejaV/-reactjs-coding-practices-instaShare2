@@ -1,7 +1,10 @@
-import {Component} from 'react'
+import React, {Component} from 'react'
 import Loader from 'react-loader-spinner'
 import Slider from 'react-slick'
 import Cookies from 'js-cookie'
+
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 import './index.css'
 
@@ -13,11 +16,38 @@ const apiStatusConstants = {
 }
 
 const settings = {
-  dots: false,
-  infinite: true,
+  dots: true,
+  infinite: false,
   speed: 500,
-  slidesToShow: 3,
-  slidesToScroll: 3,
+  slidesToShow: 6,
+  slidesToScroll: 4,
+  initialSlide: 0,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 5,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 3,
+        initialSlide: 2,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+      },
+    },
+  ],
 }
 
 class UserStories extends Component {
@@ -27,6 +57,10 @@ class UserStories extends Component {
   }
 
   componentDidMount() {
+    this.getUserStories()
+  }
+
+  onClickRetry = () => {
     this.getUserStories()
   }
 
@@ -76,7 +110,12 @@ class UserStories extends Component {
         Something went wrong.Please try again
       </h1>
       {/* <p className="failure-view-text"></p> */}
-      <button type="button" className="retry-button">
+      <button
+        type="button"
+        className="retry-button"
+        onClick={this.onClickRetry}
+        data-testid="button"
+      >
         Try again
       </button>
     </div>
@@ -89,10 +128,10 @@ class UserStories extends Component {
         {userStories.map(each => {
           const {userId, userName, storyUrl} = each
           return (
-            <li className="list-item" key={userId}>
+            <div className="list-item" key={userId}>
               <img src={storyUrl} alt="user-story" className="story-image" />
               <h1 className="user-name">{userName}</h1>
-            </li>
+            </div>
           )
         })}
       </Slider>
