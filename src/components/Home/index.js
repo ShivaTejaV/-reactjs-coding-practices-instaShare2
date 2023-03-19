@@ -5,6 +5,8 @@ import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import UserStories from '../UserStories'
 
+import './index.css'
+
 const apiStatusConstants = {
   initial: 'INITIAL',
   success: 'SUCCESS',
@@ -20,8 +22,10 @@ class Home extends Component {
   render() {
     return (
       <>
-        <Header />
-        <UserStories />
+        <div className="main-container-home-route">
+          <Header />
+          <UserStories />
+        </div>
       </>
     )
   }
